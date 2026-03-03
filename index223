@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation start -->
+    <div id="topbar"></div>
+
+    <!-- content area, pages will replace this via simple routing (hash) -->
+    <div id="content"></div>
+
+    <!-- global message area -->
+    <div id="msg" class="msg"></div>
+
+    <!-- templates or partials loaded by js -->
+    <template id="loginTpl">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+            </div>
+            <div>
+                <label for="pass">Password</label>
+                <input type="password" id="pass" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </template>
+
+    <!-- existing pages (dashboard, upload, approvals, reports, insights) could be stored separately or built here -->
+
+    <script src="js/store.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/approvals.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/insights.js"></script>
+
+    <!-- simple router to switch pages based on hash -->
+    <script>
+        function loadPage(page){
+            const content = document.getElementById('content');
+            const tpl = document.getElementById(page + 'Tpl');
+            if (tpl){
+                content.innerHTML = tpl.innerHTML;
+                // re-run any page script if necessary
+            } else {
+                content.innerHTML = '<p>Page not found</p>';
+            }
+        }
+        window.addEventListener('hashchange', () => loadPage(location.hash.slice(1) || 'login'));        
+        // start
+        loadPage(location.hash.slice(1) || 'login');
+    </script>
+</body>
+</html>
